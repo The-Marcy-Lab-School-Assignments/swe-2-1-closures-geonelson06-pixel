@@ -2,21 +2,31 @@
 // Can you make it private using closure?
 
 const createCourse = (topic, instructor) => {
+  // students array is now private to this function scope
+  const students = [];
+
   return {
     topic,
     instructor,
-    students: [],
+    
     addStudent(name) {
-      this.students.push(name);
+      students.push(name);
     },
+
     removeStudent(name) {
-      this.students.splice(this.students.indexOf(name), 1);
+      const index = students.indexOf(name);
+      if (index !== -1) {
+        students.splice(index, 1);
+      }
     },
+
     getStudents() {
-      return this.students;
-    },
+      // return a copy to prevent external mutation
+      return [...students];
+    }
   };
 };
+
 
 module.exports = {
   createCourse,
